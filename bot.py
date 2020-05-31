@@ -1,13 +1,16 @@
 """
+ chat id for enlight 
 Simple Bot to reply to Telegram messages taken from the python-telegram-bot examples.
 Deployed using heroku.
 Author: liuhh02 https://medium.com/@liuhh02
 """
-
+import schedule
+import time
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 PORT = int(os.environ.get('PORT', 5000))
+CHAT_ID = '-488207708'
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -34,13 +37,21 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
+def send_message(event, context):
+    bot = telegram.Bot(token=TOKEN)
+    bot.sendMessage(chat_id = CHAT_ID, text = ‘Do your standups!’)
+
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater(TOKEN, use_context=True)
+#    updater = Updater(TOKEN, use_context=True)
 
+    schedule.every().minute.at(":17").do(send_message)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 #    # Get the dispatcher to register handlers
 #    dp = updater.dispatcher
 #
@@ -63,7 +74,7 @@ def main():
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
-    updater.idle()
+#    updater.idle()
 
 if __name__ == '__main__':
     main()
