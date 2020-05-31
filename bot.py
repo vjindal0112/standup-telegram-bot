@@ -8,6 +8,7 @@ import schedule
 import time
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import telegram
 import os
 PORT = int(os.environ.get('PORT', 5000))
 CHAT_ID = '-488207708'
@@ -37,9 +38,9 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-def send_message(event, context):
+def send_message():
     bot = telegram.Bot(token=TOKEN)
-    bot.sendMessage(chat_id = CHAT_ID, text = ‘Do your standups!’)
+    bot.sendMessage(chat_id = CHAT_ID, text = "Do your standups!")
 
 def main():
     """Start the bot."""
