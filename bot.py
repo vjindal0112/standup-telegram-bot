@@ -40,7 +40,7 @@ def error(update, context):
 
 def send_message():
     bot = telegram.Bot(token=TOKEN)
-    bot.sendMessage(chat_id = CHAT_ID, text = "Do your standups!")
+    bot.sendMessage(chat_id = CHAT_ID, text = "Hey Enlight, do your standups and update the metrics sheet")
 
 def main():
     """Start the bot."""
